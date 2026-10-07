@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TalentMatch — Resume & Job Matching for Recruiters</title>
+  <meta name="description" content="TalentMatch automatically extracts skills from resumes and job descriptions, scores every candidate, and ranks your shortlist in seconds.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="landing">
+
+  <!-- NAV -->
+  <header class="landing-nav">
+    <div class="landing-nav__inner">
+      <a href="index.html" class="brand">
+        <span class="brand__mark" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="1" y="1" width="22" height="22" rx="7" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M7 12.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="brand__name">TalentMatch</span>
+      </a>
+
+      <nav class="landing-nav__links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#algorithms">Algorithms</a>
+      </nav>
+
+      <div class="landing-nav__auth">
+        <button type="button" class="btn btn--ghost" id="loginBtn">Log in</button>
+        <a href="dashboard.html" class="btn btn--primary">Open Dashboard →</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          DSA-Powered Matching Engine
+        </div>
+        <h1 class="hero__headline">
+          Match Resumes to Jobs<br>with Smart Algorithms
+        </h1>
+        <p class="hero__desc">
+          TalentMatch reads uploaded resumes and job descriptions, extracts skills
+          automatically using a HashMap, scores candidates via Edit Distance (Wagner-Fischer DP),
+          and ranks your shortlist using Merge Sort — in seconds.
+        </p>
+        <div class="hero__ctas">
+          <a href="dashboard.html" class="btn btn--primary btn--lg" id="getStartedBtn">Get started →</a>
+          <a href="#how-it-works" class="btn btn--secondary btn--lg">See how it works</a>
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="pipeline-card">
+          <p class="pipeline-card__title">Live pipeline</p>
+          <div class="pipeline-step">
+            <span class="pipeline-step__dot pipeline-step__dot--done"></span>
+            <span class="pipeline-step__label">
+              Resume ingested
+              <span class="step-sub">3 files · 1.2 MB</span>
+            </span>
+          </div>
+          <div class="pipeline-step">
+            <span class="pipeline-step__dot pipeline-step__dot--done"></span>
+            <span class="pipeline-step__label">
+              9 skills extracted
+              <span class="step-sub">via HashMap dedup</span>
+            </span>
+          </div>
+          <div class="pipeline-step">
+            <span class="pipeline-step__dot pipeline-step__dot--done"></span>
+            <span class="pipeline-step__label">
+              Edit Distance scored
+              <span class="step-sub">Wagner-Fischer DP table</span>
+            </span>
+          </div>
+          <div class="pipeline-step">
+            <span class="pipeline-step__dot pipeline-step__dot--active"></span>
+            <span class="pipeline-step__label">
+              Merge sort ranking…
+              <span class="step-sub">O(n log n)</span>
+            </span>
+          </div>
+          <div class="pipeline-card__score">
+            <svg viewBox="0 0 36 36" class="score-ring">
+              <path class="score-ring__bg" d="M18 2 a 16 16 0 0 1 0 32 a 16 16 0 0 1 0 -32" />
+              <path class="score-ring__fg" stroke-dasharray="88, 100" d="M18 2 a 16 16 0 0 1 0 32 a 16 16 0 0 1 0 -32" />
+            </svg>
+            <div class="pipeline-card__score-text">
+              <strong>88%</strong>
+              <span>top match · Priya S.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+      <p class="section-label">Core capabilities</p>
+      <h2 class="section-title">Everything your hiring pipeline needs</h2>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <h3>Skill Extraction</h3>
+          <p>Parses free-text resumes and job descriptions. Uses a HashSet to deduplicate skills and normalize to lowercase — no manual tagging needed.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <h3>Edit Distance Fit Score</h3>
+          <p>Wagner-Fischer Dynamic Programming (DSA-3 Module 3) computes fuzzy string alignment, handling typos, synonyms, and variations in O(m·n).</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M3 6h18M7 12h10M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <h3>Merge Sort Ranking</h3>
+          <p>All candidates are sorted by score using Merge Sort (O(n log n)). Top-K shortlisting uses a Max-Heap Priority Queue.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <h3>Skill Gap Analysis</h3>
+          <p>Shows exactly which skills a candidate has (matched) vs. which are missing — so you can make informed decisions fast.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
+              <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
+              <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
+              <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+          </span>
+          <h3>Recruiter Dashboard</h3>
+          <p>Clean UI to post jobs, view ranked candidates, filter by score threshold, and manage your shortlist in one place.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <h3>Java REST API</h3>
+          <p>Pure Java backend (no frameworks) using the built-in HttpServer. Exposes <code>/api/candidates</code> and <code>/api/match</code> endpoints.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="steps" id="how-it-works">
+      <p class="section-label">Pipeline</p>
+      <h2 class="section-title">How matching works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-card__num">01</div>
+          <h3>Post a Job</h3>
+          <p>Enter a job title and paste the required skills (comma-separated). Stored as a <code>HashSet&lt;String&gt;</code> in Java.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__num">02</div>
+          <h3>Add Candidates</h3>
+          <p>Enter candidate name and their skills. <code>SkillExtractor.java</code> normalizes and deduplicates via a HashMap.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__num">03</div>
+          <h3>Score</h3>
+          <p><code>EditDistanceScorer.java</code> computes Wagner-Fischer DP edit distance to fuzzy match skills against job requirements.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-card__num">04</div>
+          <h3>Rank & Shortlist</h3>
+          <p><code>CandidateRanker.java</code> sorts by score using Merge Sort. Top candidates shown first.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ALGORITHMS -->
+    <section class="features" id="algorithms">
+      <p class="section-label">DSA Reference</p>
+      <h2 class="section-title">Algorithms powering TalentMatch</h2>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><line x1="3" y1="9" x2="21" y2="9" stroke="currentColor" stroke-width="1.8"/><line x1="9" y1="21" x2="9" y2="9" stroke="currentColor" stroke-width="1.8"/></svg>
+          </span>
+          <h3>HashMap / HashSet</h3>
+          <p><strong>SkillExtractor.java</strong> — O(n) skill normalization. Deduplication in constant time using hash-based sets (Module 1 / 6).</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h10M4 17h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M18 15l3 3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>Edit Distance (Wagner-Fischer DP)</h3>
+          <p><strong>EditDistanceScorer.java</strong> — Dynamic programming sequence alignment (Module 3). Handles typos, variations, and fuzzy matching.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-card__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M7 12h10M11 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <h3>Merge Sort</h3>
+          <p><strong>CandidateRanker.java</strong> — O(n log n) stable sort by score descending. Best for ranked leaderboards.</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="landing-footer">
+    <p>TalentMatch — DSA Project · Algorithms: HashMap, Edit Distance (Wagner-Fischer DP), Merge Sort, Priority Queue · Java backend on port 8080</p>
+  </footer>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal">
+      <div class="modal__header">
+        <h2 class="modal__title" id="loginTitle">Welcome back</h2>
+        <button class="modal__close" id="closeLoginModal" aria-label="Close">✕</button>
+      </div>
+      <div class="form-group" style="margin-bottom:14px">
+        <label for="loginEmail">Email</label>
+        <input id="loginEmail" type="email" class="form-control" placeholder="recruiter@company.com">
+      </div>
+      <div class="form-group" style="margin-bottom:22px">
+        <label for="loginPass">Password</label>
+        <input id="loginPass" type="password" class="form-control" placeholder="••••••••">
+      </div>
+      <a href="dashboard.html" class="btn btn--primary" style="width:100%;justify-content:center">Log in →</a>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

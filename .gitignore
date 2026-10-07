@@ -1,0 +1,8 @@
+# Build outputs
+bin/
+backend/bin/
+*.class
+
+# IDE & OS
+.DS_Store
+Thumbs.db

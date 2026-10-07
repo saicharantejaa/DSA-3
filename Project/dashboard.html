@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — TalentMatch</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- PDF.js — reads PDF files in the browser, no install needed -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.8"/>
+        <path d="M7 12.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="sidebar__brand-name">TalentMatch</span>
+    </div>
+
+    <a href="dashboard.html" class="nav-item active" id="nav-dashboard" onclick="showView('overview');return false;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8"/></svg>
+      Dashboard
+    </a>
+
+    <button class="nav-item" id="nav-upload" onclick="showView('upload')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="18" x2="12" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="9 15 12 12 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Upload Resume
+    </button>
+
+    <button class="nav-item" id="nav-jobs" onclick="showView('jobs')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" stroke="currentColor" stroke-width="1.8"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="currentColor" stroke-width="1.8"/></svg>
+      Jobs
+    </button>
+
+    <button class="nav-item" id="nav-candidates" onclick="showView('candidates')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Candidates
+    </button>
+
+    <button class="nav-item" id="nav-match" onclick="showView('match')">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Run Match
+    </button>
+
+    <div style="margin-top:auto; padding-top:14px; border-top: 1px solid var(--border);">
+      <a href="index.html" class="nav-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Home
+      </a>
+      <button class="nav-item" onclick="if(confirm('Clear ALL jobs, candidates and results?')) clearStorage()"
+        style="color:var(--danger-text);margin-top:2px">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M19 6l-1 14H6L5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10 11v6M14 11v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 6V4h6v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Clear All Data
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+
+    <!-- ===== OVERVIEW ===== -->
+    <div id="view-overview">
+      <div class="dash-topbar">
+        <h1>Dashboard</h1>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn--secondary btn--sm" onclick="showView('upload')">Upload PDF</button>
+          <button class="btn btn--primary btn--sm" onclick="showView('match')">Run Matching</button>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-card__label">Total Candidates</div>
+          <div class="stat-card__value blue" id="stat-candidates">0</div>
+          <div class="stat-card__sub">in talent pool</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Active Jobs</div>
+          <div class="stat-card__value" id="stat-jobs">0</div>
+          <div class="stat-card__sub">open positions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Avg Match Score</div>
+          <div class="stat-card__value green" id="stat-avg">—</div>
+          <div class="stat-card__sub">across evaluated candidates</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__label">Top Match</div>
+          <div class="stat-card__value yellow" id="stat-top">—</div>
+          <div class="stat-card__sub" id="stat-top-name">no matches yet</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__header">
+          <span class="card__title">Latest Ranking Results</span>
+          <button class="btn btn--secondary btn--sm" onclick="showView('match')">Re-run</button>
+        </div>
+        <div id="results-table-wrap">
+          <div class="empty-state">
+            <h3>No matches yet</h3>
+            <p>Upload a resume or navigate to <strong>Run Match</strong> to evaluate candidates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== UPLOAD RESUME (PDF) VIEW ===== -->
+    <div id="view-upload" style="display:none">
+      <div class="dash-topbar">
+        <h1>Upload Resume (PDF)</h1>
+      </div>
+
+      <!-- Drop Zone -->
+      <div class="card">
+        <div class="card__header"><span class="card__title">Step 1 — Upload PDF Resume</span></div>
+
+        <div class="pdf-dropzone" id="pdfDropzone">
+          <div class="pdf-dropzone__icon">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="12" y1="18" x2="12" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><polyline points="9 15 12 12 15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <p class="pdf-dropzone__label">Drag and drop resume PDF</p>
+          <p class="pdf-dropzone__sub">or click to browse files</p>
+          <input type="file" id="pdfFileInput" accept=".pdf" style="display:none">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center">
+            <button class="btn btn--secondary btn--sm" onclick="document.getElementById('pdfFileInput').click()">Browse PDF</button>
+            <span style="font-size:0.8rem;color:var(--text-faint)">or</span>
+            <button class="btn btn--ghost btn--sm" id="pasteTextBtn" onclick="
+              document.getElementById('pdfPasteCard').style.display='';
+              document.getElementById('pdfSkillCard').style.display='';
+              document.getElementById('pdfAddCard').style.display='';
+              populatePdfJobDropdown();
+              document.getElementById('pdfPasteCard').scrollIntoView({behavior:'smooth'});
+            ">Paste resume text instead</button>
+          </div>
+        </div>
+
+        <!-- File info bar -->
+        <div id="pdfFileInfo" style="display:none; margin-top:14px; padding:12px 14px; background:var(--bg-surface-hover); border:1px solid var(--border); border-radius:var(--radius-sm); align-items:center; gap:12px;">
+          <div style="flex:1">
+            <div id="pdfFileName" style="font-weight:600; font-size:0.86rem"></div>
+            <div id="pdfFileSize" style="font-size:0.75rem; color:var(--text-muted)"></div>
+          </div>
+          <button class="btn btn--ghost btn--sm" onclick="clearPdf()">Remove</button>
+        </div>
+      </div>
+
+      <!-- Extracted Text Preview -->
+      <div class="card" id="pdfTextCard" style="display:none">
+        <div class="card__header">
+          <span class="card__title">Step 2 — Extracted Text Preview</span>
+          <span id="pdfPageCount" style="font-size:0.78rem;color:var(--text-muted)"></span>
+        </div>
+        <div id="pdfTextPreview" style="
+          background: var(--bg-input); border: 1px solid var(--border); border-radius: var(--radius-sm);
+          padding: 14px; font-size: 0.78rem; line-height: 1.6;
+          color: var(--text-muted); max-height: 180px; overflow-y: auto;
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; word-break: break-word;
+        "></div>
+      </div>
+
+      <!-- PASTE TEXT FALLBACK -->
+      <div class="card" id="pdfPasteCard" style="display:none">
+        <div class="card__header">
+          <span class="card__title">Paste Resume Text (Direct Input)</span>
+          <span style="font-size:0.76rem;color:var(--warn-text);font-weight:500">Fallback mode</span>
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px">
+          If your PDF contains scanned images or custom fonts, copy the text and paste it below:
+        </p>
+        <div class="form-group">
+          <label for="pdfPasteTextarea">Resume text</label>
+          <textarea id="pdfPasteTextarea" class="form-control" rows="7"
+            placeholder="Paste raw resume text here…"></textarea>
+        </div>
+        <div class="form-actions" style="margin-top:10px">
+          <button class="btn btn--primary" onclick="extractFromPastedText()">Extract Skills from Text</button>
+        </div>
+      </div>
+
+      <!-- Skill Detection -->
+      <div class="card" id="pdfSkillCard" style="display:none">
+        <div class="card__header">
+          <span class="card__title">Step 3 — Detected Skills (HashMap Extraction)</span>
+          <span id="pdfSkillCount" style="font-size:0.78rem;color:var(--text-muted)"></span>
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px">
+          Skills identified by token matching against tech taxonomy using a <strong>HashMap lookup</strong> — O(n). Click any tag to toggle it.
+        </p>
+        <div id="pdfSkillTags" class="skill-tags" style="margin-bottom:16px"></div>
+
+        <!-- Custom skill input -->
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="pdfCustomSkill" type="text" class="form-control" style="max-width:240px" placeholder="Add custom skill…">
+          <button class="btn btn--secondary btn--sm" onclick="addCustomSkill()">Add</button>
+        </div>
+      </div>
+
+      <!-- Add to pool -->
+      <div class="card" id="pdfAddCard" style="display:none">
+        <div class="card__header"><span class="card__title">Step 4 — Add to Talent Pool</span></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="pdfCandName">Candidate Name</label>
+            <input id="pdfCandName" type="text" class="form-control" placeholder="e.g. Priya Sharma">
+          </div>
+          <div class="form-group">
+            <label>Evaluate Against Job</label>
+            <select id="pdfMatchJob" class="form-control">
+              <option value="">— add to pool only —</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions" style="margin-top:16px">
+          <button class="btn btn--primary" onclick="addFromPdf()">Add &amp; Run Match</button>
+          <button class="btn btn--secondary" onclick="addFromPdfOnly()">Add to Pool Only</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== JOBS VIEW ===== -->
+    <div id="view-jobs" style="display:none">
+      <div class="dash-topbar"><h1>Job Openings</h1></div>
+      <div class="card">
+        <div class="card__header"><span class="card__title">Create Job Position</span></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input id="jobTitle" type="text" class="form-control" placeholder="e.g. Senior Java Developer">
+          </div>
+          <div class="form-group">
+            <label for="jobSkills">Required Skills <span style="color:var(--text-faint)">(comma-separated)</span></label>
+            <input id="jobSkills" type="text" class="form-control" placeholder="e.g. java, spring, sql, docker">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--primary" onclick="addJob()">Save Job</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header"><span class="card__title">Configured Positions</span></div>
+        <div id="jobs-list">
+          <div class="empty-state"><h3>No jobs yet</h3><p>Create your first job position above.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CANDIDATES VIEW ===== -->
+    <div id="view-candidates" style="display:none">
+      <div class="dash-topbar"><h1>Candidates</h1></div>
+      <div class="card">
+        <div class="card__header"><span class="card__title">Add Candidate Manually</span></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="candName">Full Name</label>
+            <input id="candName" type="text" class="form-control" placeholder="e.g. Priya Sharma">
+          </div>
+          <div class="form-group">
+            <label for="candSkills">Skills <span style="color:var(--text-faint)">(comma-separated)</span></label>
+            <input id="candSkills" type="text" class="form-control" placeholder="e.g. java, spring, react, sql">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--primary" onclick="addCandidate()">Add Candidate</button>
+          <button class="btn btn--secondary" onclick="showView('upload')">Upload PDF Instead</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__header"><span class="card__title">Talent Pool</span></div>
+        <div id="candidates-list">
+          <div class="empty-state"><h3>No candidates yet</h3><p>Add candidate manually or upload a PDF resume.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MATCH VIEW ===== -->
+    <div id="view-match" style="display:none">
+      <div class="dash-topbar"><h1>Candidate Matching</h1></div>
+      <div class="card">
+        <div class="card__header"><span class="card__title">Matching Parameters</span></div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="matchJob">Target Job Position</label>
+            <select id="matchJob" class="form-control">
+              <option value="">— select position —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="matchThreshold">Minimum Fit Threshold (%)</label>
+            <input id="matchThreshold" type="number" class="form-control" value="0" min="0" max="100">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn--primary" onclick="runMatch()">Execute Matching Algorithm</button>
+          <button class="btn btn--secondary" onclick="clearResults()">Reset</button>
+        </div>
+      </div>
+
+      <div class="card" id="algo-trace-card" style="display:none">
+        <div class="card__header"><span class="card__title">Algorithm Execution Trace</span></div>
+        <div id="algo-trace"></div>
+      </div>
+
+      <div class="card" id="match-results-card" style="display:none">
+        <div class="card__header">
+          <span class="card__title">Ranked Candidate Shortlist</span>
+          <span id="match-job-label" style="font-size:0.8rem;color:var(--text-muted)"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th><th>Candidate</th><th>Fit Score</th>
+                <th>Matched Skills</th><th>Missing Skills</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="match-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/app.js"></script>
+</body>
+</html>
